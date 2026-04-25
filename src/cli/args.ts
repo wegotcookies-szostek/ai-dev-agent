@@ -15,7 +15,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
         );
     }
 
-    const rawRepoPath = argv[repoIndex + 1];
+    const rawRepoPath = argv[repoIndex + 1] as string;
     const repoPath = path.resolve(rawRepoPath);
 
     const task = argv
