@@ -1,4 +1,4 @@
-import { AgentStateType } from "../state";
+import type {AgentStateType} from "../state";
 import {createExecutor} from "../executors/factory";
 
 const MAX_ATTEMPTS = 5;

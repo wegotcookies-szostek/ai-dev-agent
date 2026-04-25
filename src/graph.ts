@@ -1,5 +1,5 @@
 import { END, START, StateGraph } from "@langchain/langgraph";
-import { AgentState, AgentStateType } from "./state";
+import { AgentState, type AgentStateType } from "./state";
 
 import { planNode } from "./nodes/plan";
 import { codeNode } from "./nodes/code";
