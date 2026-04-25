@@ -6,33 +6,24 @@ import {
 } from "../prompts/implement.js";
 import { implementationResultSpec } from "../schemas/results.js";
 import type { AgentStateType } from "../state.js";
-import { renderPlan } from "../utils/render.js";
 import { createImplementationTools } from "../tools/repo-tools.js";
+import { renderPlan } from "../utils/render.js";
 
-export async function fixNode(state: AgentStateType) {
+export async function implementNode(state: AgentStateType) {
     const config = loadConfig({
         provider: state.provider,
         model: state.model,
         openAiBaseUrl: state.openAiBaseUrl,
     });
-    const attempts = state.attempts + 1;
-
-    if (attempts > config.maxFixAttempts) {
-        return {
-            attempts,
-            status: "blocked" as const,
-        };
-    }
-
     const model = createModel(config);
     const result = await model.runToolAgent({
         systemPrompt: IMPLEMENTATION_SYSTEM_PROMPT,
         userPrompt: buildImplementationPrompt({
             task: state.task,
             plan: renderPlan(state.plan),
-            priorSummary: state.implementation?.summary,
-            verificationSummary: state.verification?.summary,
-            issues: state.verification?.issues ?? [],
+            priorSummary: undefined,
+            verificationSummary: undefined,
+            issues: undefined,
         }),
         tools: createImplementationTools(),
         result: implementationResultSpec,
@@ -45,7 +36,6 @@ export async function fixNode(state: AgentStateType) {
 
     return {
         implementation: result,
-        attempts,
         status: result.status === "blocked" ? "blocked" as const : "verifying" as const,
     };
 }

@@ -18,7 +18,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "nodenext",
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
